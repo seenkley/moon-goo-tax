@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MarketFetcherService } from '../market-fetcher.service';
 import { MarketData } from '../market-data';
+import { RefinedMoonOre } from '../interfaces/refined-moon-ore'
+import { ObjectUnsubscribedError } from 'rxjs';
+import { RefinedMoonOreNames } from '../interfaces/refined-moon-ore-names'
+import { MoonOreDetailFetcherService } from './moon-ore-detail-fetcher.service'
 
 @Component({
   selector: 'app-response-viewer',
@@ -9,22 +13,20 @@ import { MarketData } from '../market-data';
 })
 export class ResponseViewerComponent implements OnInit {
 
-  marketData = {}
 
-  constructor(private marketFetcher: MarketFetcherService) {
-    this.marketData = this.marketFetcher.getMarketData().subscribe((marketData: MarketData[]) =>
-      console.log(marketData)
-    );
-  }
+  moonOreNames = [];
 
-
-
-  ngOnInit(): void {
+  constructor(private moonOreDetailFetcherService: MoonOreDetailFetcherService,
+    private marketFetcher: MarketFetcherService) {
 
   }
 
-  getData() {
-      return this.marketData;
+  ngOnInit() {
+    this.moonOreNames = this.moonOreDetailFetcherService.getDetails();
+  }
+
+  getMoonOreNames(): RefinedMoonOreNames[] {
+    return this.moonOreNames;
   }
 
 }

@@ -2,4 +2,40 @@
 
 <!-- <li *ngFor="let obj of getData">{{obj}}</li> -->
 <!-- get getdata() gets called 19023120893 times  -->
-<div>{{getData()}}</div>
+<!-- <li *ngFor="let obj of getData">{{jsonObject  | json}}</li> -->
+<!-- 
+<ul>
+    <li *ngFor="let price of getData()">{{ price.max }} {{ price.min }}</li>
+</ul> -->
+
+<h1>Latest prices</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Jita Buy</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let ids of getMoonOreNames()">
+
+            <td>
+                {{ ids.id }}
+            </td>
+
+            <td>
+                {{ ids.name }}
+            </td>
+            <td>
+                {{ ids.price }}
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
+<!-- <ul>
+    <li *ngFor="let price of getAllData()">{{ price }} </li>
+</ul> -->

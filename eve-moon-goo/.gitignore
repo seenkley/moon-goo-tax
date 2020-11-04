@@ -44,3 +44,6 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+.vscode
+
+/src/app/assets/application-logins.json

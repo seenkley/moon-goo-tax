@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { MarketData } from './market-data';
 import { Observable } from 'rxjs';
+import { RefinedMoonOre } from './interfaces/refined-moon-ore'
+import { RefinedMoonOreNames } from './interfaces/refined-moon-ore-names'
 
 
 // {
@@ -41,17 +43,28 @@ export class MarketFetcherService {
 
   fuzzworkUrl = 'https://market.fuzzwork.co.uk/aggregates/'
   stationCode = 30000142
-  testUrl = 'https://market.fuzzwork.co.uk/aggregates/?region=10000002&types=34,35,36,37,38,39,40'
-  
+  testUrl = 'https://market.fuzzwork.co.uk/aggregates/?region=30000142&types='
+
+  moonMatUrl = 'https://esi.evetech.net/latest/universe/groups/427/?datasource=tranquility&language=en-us'
+  moonMatNameUrl = 'https://esi.evetech.net/latest/universe/names/?datasource=tranquility' // requires post
+
   marketData = {};
+
+  refinedMoonOreIds = [];
 
   constructor(private http: HttpClient) {
 
   }
 
-  getMarketData(): Observable<MarketData[]> {
-    return this.http.get<MarketData[]>(this.testUrl);
-    // return this.http.get<MarketData[]>('https://jsonplaceholder.typicode.com/users');
+  getMarketData(moonMats: String): Observable<MarketData[]> {
+    return this.http.get<MarketData[]>(this.testUrl + moonMats);
   }
 
+  getMoonMatIds(): Observable<RefinedMoonOre> {
+    return this.http.get<RefinedMoonOre>(this.moonMatUrl);
+  }
+
+  getMoonMatNames(ids: Array<number>): Observable<RefinedMoonOreNames[]> {
+    return this.http.post<RefinedMoonOreNames[]>(this.moonMatNameUrl, ids);
+  }
 }
