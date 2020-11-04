@@ -24,6 +24,7 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -119,6 +120,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "eve-moon-goo"
+    }
+  },
+  "defaultProject": "eve-moon-goo",
+  "cli": {
+    "analytics": "cd83124c-421a-4438-bd7f-9e6c564eda25"
+  }
 }
