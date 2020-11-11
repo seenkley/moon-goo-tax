@@ -28,6 +28,7 @@
               "src/styles.css"
             ],
             "scripts": []
+
           },
           "configurations": {
             "production": {
@@ -63,7 +64,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "eve-moon-goo:build"
+            "browserTarget": "eve-moon-goo:build",
+            "proxyConfig": "src/proxy.conf.json"
           },
           "configurations": {
             "production": {

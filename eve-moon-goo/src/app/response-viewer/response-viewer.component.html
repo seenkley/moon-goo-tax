@@ -1,41 +1,62 @@
-<p>response-viewer works!</p>
-
-<!-- <li *ngFor="let obj of getData">{{obj}}</li> -->
-<!-- get getdata() gets called 19023120893 times  -->
-<!-- <li *ngFor="let obj of getData">{{jsonObject  | json}}</li> -->
-<!-- 
-<ul>
-    <li *ngFor="let price of getData()">{{ price.max }} {{ price.min }}</li>
-</ul> -->
-
-<h1>Latest prices</h1>
-
-<table class="table">
+<form>
+    <div class="form-group form-inline">
+        Character search: <input class="form-control ml-2" type="text" [(ngModel)]="searchString" name="searchString" />
+    </div>
+</form>
+<table class="table table-striped">
     <thead>
         <tr>
-            <th scope="col">ID</th>
             <th scope="col">Name</th>
-            <th scope="col">Jita Buy</th>
+            <th scope="col">Debt</th>
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let ids of getMoonOreNames()">
+        <ng-container *ngFor="let character of characters$ | async">
+            <tr
+                *ngIf="searchString === undefined || searchString.length === 0 || character.name.toLowerCase().includes(searchString.toLowerCase())" (click)="openModal(content)">
 
-            <td>
-                {{ ids.id }}
-            </td>
+                <ng-template #content let-modal>
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-basic-title">Mined Ore</h4>
+                        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="minedOre">Total mined ore for <b>{{ character.name }}</b></label>
+                                <table class="table table-striped">
 
-            <td>
-                {{ ids.name }}
-            </td>
-            <td>
-                {{ ids.price }}
-            </td>
-        </tr>
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Ore</th>
+                                            <th scope="col">Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        <tr *ngFor="let ore of character.minedOre | keyvalue">
+                                            <td>
+                                                {{ ore.key }}
+                                            </td>
+                                            <td>
+                                                {{ ore.value }}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                    </div>
+                </ng-template>
+                <td>
+                    <ngb-highlight [result]="character.name" [term]="searchString"></ngb-highlight>
+                </td>
+                <td>
+                    <ngb-highlight [result]="character.debt | number" [term]="searchString"></ngb-highlight>
+                </td>
+            </tr>
+        </ng-container>
     </tbody>
 </table>
-
-
-<!-- <ul>
-    <li *ngFor="let price of getAllData()">{{ price }} </li>
-</ul> -->
