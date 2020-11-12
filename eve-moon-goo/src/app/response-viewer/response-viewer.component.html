@@ -13,7 +13,7 @@
     <tbody>
         <ng-container *ngFor="let character of characters$ | async">
             <tr
-                *ngIf="searchString === undefined || searchString.length === 0 || character.name.toLowerCase().includes(searchString.toLowerCase())" (click)="openModal(content)">
+                *ngIf="character.debt > 0 && (searchString === undefined || searchString.length === 0 || character.name.toLowerCase().includes(searchString.toLowerCase()))" (click)="openModal(content)">
 
                 <ng-template #content let-modal>
                     <div class="modal-header">
