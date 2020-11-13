@@ -15,7 +15,7 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
 export class ResponseViewerComponent implements OnInit {
 
-  characterEndpoint = 'http://localhost:8080/info/characters';
+  characterEndpoint = 'http://localhost:8090/info/characters';
 
   characters$: Observable<CharacterViewer[]>;
   searchString?: string; // ? = optional
