@@ -64,6 +64,7 @@ export class ResponseViewerComponent implements OnInit {
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
+    
   }
 
 }
