@@ -7,7 +7,7 @@ export interface CharacterViewer {
     id: Number,
     name: String, 
     corpName: String,
-    debt: Number,
+    debt: number,
     minedOre: {
         [key: string]: MinedOre
     };

@@ -1,3 +1,44 @@
+<ng-template #jitaPrices let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Jita Prices</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Last Update</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let ore of moonOre$ | async">
+                    <tr>
+                        <td>
+                            {{ ore.id }}
+                        </td>
+                        <td>
+                            {{ ore.name }}
+                        </td>
+                        <td>
+                            {{ ore.price | number}} ISK
+                        </td>
+                        <td>
+                            {{ ore.date }}
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </div>
+</ng-template>
+
+<button class="btn btn-lg btn-outline-primary" (click)="openModalLg(jitaPrices)" style="float: right;">Show Jita
+    Prices</button>
 <form>
     <div class="form-group form-inline">
         Character search: <input class="form-control ml-2" type="text" [(ngModel)]="searchString" name="searchString" />
@@ -6,15 +47,17 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Corp</th>
-            <th scope="col">Debt</th>
+            <th scope="col" sortable="name">Name</th>
+            <th scope="col" sortable="corp">Corp</th>
+            <th scope="col" sortable="debt">Debt</th>
         </tr>
     </thead>
     <tbody>
         <ng-container *ngFor="let character of characters$ | async">
-            <tr
-                *ngIf="character.debt > 0 && (searchString === undefined || searchString.length === 0 || character.name.toLowerCase().includes(searchString.toLowerCase()))" (click)="openModal(content)">
+            <tr *ngIf="character.debt != 0 && (searchString === undefined || searchString.length === 0 
+                || character.name.toLowerCase().includes(searchString.toLowerCase())
+                || character.corpName.toLowerCase().includes(searchString.toLowerCase()))"
+                (click)="openModal(content)">
 
                 <ng-template #content let-modal>
                     <div class="modal-header">
@@ -55,7 +98,7 @@
                     <ngb-highlight [result]="character.name" [term]="searchString"></ngb-highlight>
                 </td>
                 <td>
-                    {{ character.corpName }}
+                    <ngb-highlight [result]="character.corpName" [term]="searchString"></ngb-highlight>
                 </td>
                 <td>
                     <ngb-highlight [result]="character.debt | number" [term]="searchString"></ngb-highlight> ISK
