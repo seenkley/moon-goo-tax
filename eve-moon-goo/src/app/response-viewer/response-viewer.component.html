@@ -76,16 +76,20 @@
                                         <tr>
                                             <th scope="col">Ore</th>
                                             <th scope="col">Amount</th>
+                                            <th scope="col">Delta</th>
                                         </tr>
                                     </thead>
                                     <tbody>
 
-                                        <tr *ngFor="let ore of character.minedOre | keyvalue">
+                                        <tr *ngFor="let ore of character.minedOre">
                                             <td>
-                                                {{ ore.key }}
+                                                {{ ore.name }}
                                             </td>
                                             <td>
-                                                {{ ore.value }}
+                                                {{ ore.totalAmount | number}}
+                                            </td>
+                                            <td>
+                                                +{{ ore.delta | number}}
                                             </td>
                                         </tr>
                                     </tbody>
