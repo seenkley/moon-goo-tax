@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CharacterViewer } from '../interfaces/character-viewer'
 import { MoonOre } from '../interfaces/moon-ore'
@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { FormControl } from '@angular/forms';
 import { map, startWith } from 'rxjs/operators';
 
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-response-viewer',
@@ -40,11 +40,20 @@ export class ResponseViewerComponent implements OnInit {
       map(events => events.sort((a: CharacterViewer, b: CharacterViewer) =>
         b.debt - a.debt
       )
-    ));
+      ));
 
     this.getCharacters().subscribe(character => console.log(character));
 
-    this.moonOre$ = this.getMoonOre();
+    this.moonOre$ = this.getMoonOre().pipe(
+      map(events => events.sort((a: MoonOre, b: MoonOre) => {
+        if (a.name < b.name)
+          return -1;
+        if (a.name > b.name)
+          return 1;
+        return 0;
+      })
+      )
+    );
   }
 
   getCharacters(): Observable<CharacterViewer[]> {
@@ -54,13 +63,13 @@ export class ResponseViewerComponent implements OnInit {
   getMoonOre(): Observable<MoonOre[]> {
     return this.http.get<MoonOre[]>(this.moonOreEndpoint);
   }
-  
+
 
   // modal stuff
   closeResult = '';
 
   openModal(content) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
@@ -68,7 +77,7 @@ export class ResponseViewerComponent implements OnInit {
   }
 
   openModalLg(content) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title', size: 'lg'}).result.then((result) => {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: 'lg' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
@@ -86,7 +95,7 @@ export class ResponseViewerComponent implements OnInit {
   }
 
   open(content) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
