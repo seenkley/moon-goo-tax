@@ -1,5 +1,7 @@
 export interface MinedOre {
-    [key: string]: Number;
+    name: String,
+    totalAmount: Number,
+    delta: Number
 }
 
 export interface CharacterViewer {
@@ -9,6 +11,6 @@ export interface CharacterViewer {
     corpName: String,
     debt: number,
     minedOre: {
-        [key: string]: MinedOre
+       ore: MinedOre;
     };
 }

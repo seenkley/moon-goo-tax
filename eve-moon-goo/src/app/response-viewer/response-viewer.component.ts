@@ -42,6 +42,8 @@ export class ResponseViewerComponent implements OnInit {
       )
     ));
 
+    this.getCharacters().subscribe(character => console.log(character));
+
     this.moonOre$ = this.getMoonOre();
   }
 
