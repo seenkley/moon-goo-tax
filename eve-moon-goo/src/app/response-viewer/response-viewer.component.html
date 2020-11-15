@@ -39,7 +39,7 @@
 
 <button class="btn btn-lg btn-outline-primary" (click)="openModalLg(jitaPrices)" style="float: right;">Show Jita
     Prices</button>
-<form>
+ <form>
     <div class="form-group form-inline">
         Character search: <input class="form-control ml-2" type="text" [(ngModel)]="searchString" name="searchString" />
     </div>
@@ -47,17 +47,18 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <th scope="col" sortable="name">Name</th>
-            <th scope="col" sortable="corp">Corp</th>
-            <th scope="col" sortable="debt">Debt</th>
+            <th scope="col" sortable="name" (sort)="onSort($event)">Name</th>
+            <th scope="col" sortable="corpName" (sort)="onSort($event)">Corp</th>
+            <th scope="col" sortable="debt" (sort)="onSort($event)">Debt</th>
         </tr>
     </thead>
     <tbody>
-        <ng-container *ngFor="let character of characters$ | async">
-            <tr *ngIf="character.debt != 0 && (searchString === undefined || searchString.length === 0 
-                || character.name.toLowerCase().includes(searchString.toLowerCase())
-                || character.corpName.toLowerCase().includes(searchString.toLowerCase()))"
-                (click)="openModal(content)">
+        <ng-container *ngFor="let character of characters">
+            <tr   *ngIf="character.debt != 0 && (searchString === undefined || searchString.length === 0 
+            || character.name.toLowerCase().includes(searchString.toLowerCase())
+            || character.corpName.toLowerCase().includes(searchString.toLowerCase()))"
+            (click)="openModal(content)">
+
 
                 <ng-template #content let-modal>
                     <div class="modal-header">
@@ -98,6 +99,7 @@
                         </form>
                     </div>
                 </ng-template>
+
                 <td>
                     <ngb-highlight [result]="character.name" [term]="searchString"></ngb-highlight>
                 </td>
