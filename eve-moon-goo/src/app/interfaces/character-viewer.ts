@@ -1,16 +1,16 @@
 export interface MinedOre {
-    name: String,
-    totalAmount: Number,
-    delta: Number
+    name: string,
+    totalAmount: number,
+    delta: number
 }
 
 export interface CharacterViewer {
 
-    id: Number,
-    name: String, 
-    corpName: String,
+    id: number,
+    name: string, 
+    corpName: string,
     debt: number,
-    minedOre: {
-       ore: MinedOre;
-    };
+    // minedOre: {
+    //    ore: MinedOre;
+    // };
 }

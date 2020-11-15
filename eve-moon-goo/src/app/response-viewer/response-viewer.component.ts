@@ -1,12 +1,44 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Directive, EventEmitter, Input, Output, QueryList, ViewChildren } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CharacterViewer } from '../interfaces/character-viewer'
-import { MoonOre } from '../interfaces/moon-ore'
+import { CharacterViewer } from '../interfaces/character-viewer';
+import { MoonOre } from '../interfaces/moon-ore';
 import { HttpClient } from '@angular/common/http';
 import { FormControl } from '@angular/forms';
 import { map, startWith } from 'rxjs/operators';
+import { FetchServiceService } from '../services/fetch-service.service'
 
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+
+export type SortColumn = keyof CharacterViewer | '';
+export type SortDirection = 'asc' | 'desc' | '';
+const rotate: { [key: string]: SortDirection } = { 'asc': 'desc', 'desc': '', '': 'asc' };
+
+const compare = (v1: string | number, v2: string | number) => v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
+
+export interface SortEvent {
+  column: SortColumn;
+  direction: SortDirection;
+}
+
+@Directive({
+  selector: 'th[sortable]',
+  host: {
+    '[class.asc]': 'direction === "asc"',
+    '[class.desc]': 'direction === "desc"',
+    '(click)': 'rotate()'
+  }
+})
+export class NgbdSortableHeader {
+
+  @Input() sortable: SortColumn = '';
+  @Input() direction: SortDirection = '';
+  @Output() sort = new EventEmitter<SortEvent>();
+
+  rotate() {
+    this.direction = rotate[this.direction];
+    this.sort.emit({ column: this.sortable, direction: this.direction });
+  }
+}
 
 @Component({
   selector: 'app-response-viewer',
@@ -14,37 +46,45 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./response-viewer.component.css']
 })
 
+export class ResponseViewerComponent {
 
-export class ResponseViewerComponent implements OnInit {
-
-  baseUrl = 'http://localhost:8090/'
-
-  characterEndpoint = this.baseUrl + 'info/characters'; // this needs to be changed to a proper ip!!!
-  moonOreEndpoint = this.baseUrl + 'info/ore';
-
-  characters$: Observable<CharacterViewer[]>;
-  characters: CharacterViewer[];
+  characters: CharacterViewer[] = [];
   searchString?: string; // ? = optional
   moonOre$: Observable<MoonOre[]>;
 
-  constructor(private http: HttpClient, private modalService: NgbModal) {
-
+  constructor(private modalService: NgbModal, private fetchService: FetchServiceService) {
+    this.fetchService.getCharacters();
+    this.characters = this.fetchService.getCharArray()
   }
 
   ngOnInit() {
     this.init();
   }
 
+  @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
+
+  onSort({ column, direction }: SortEvent) {
+
+    // resetting other headers
+    this.headers.forEach(header => {
+      if (header.sortable !== column) {
+        header.direction = '';
+      }
+    });
+
+    // sorting countries
+    if (direction === '' || column === '') {
+      this.characters = this.fetchService.getCharArray();
+    } else {
+      this.characters = [...this.fetchService.getCharArray()].sort((a, b) => {
+        const res = compare(a[column], b[column]);
+        return direction === 'asc' ? res : -res;
+      });
+    }
+  }
+
   init() {
-    this.characters$ = this.getCharacters().pipe(
-      map(events => events.sort((a: CharacterViewer, b: CharacterViewer) =>
-        b.debt - a.debt
-      )
-      ));
-
-    this.getCharacters().subscribe(character => console.log(character));
-
-    this.moonOre$ = this.getMoonOre().pipe(
+    this.moonOre$ = this.fetchService.getMoonOre().pipe(
       map(events => events.sort((a: MoonOre, b: MoonOre) => {
         if (a.name < b.name)
           return -1;
@@ -55,15 +95,6 @@ export class ResponseViewerComponent implements OnInit {
       )
     );
   }
-
-  getCharacters(): Observable<CharacterViewer[]> {
-    return this.http.get<CharacterViewer[]>(this.characterEndpoint);
-  }
-
-  getMoonOre(): Observable<MoonOre[]> {
-    return this.http.get<MoonOre[]>(this.moonOreEndpoint);
-  }
-
 
   // modal stuff
   closeResult = '';

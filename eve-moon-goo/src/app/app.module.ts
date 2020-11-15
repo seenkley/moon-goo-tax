@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ResponseViewerComponent } from './response-viewer/response-viewer.component';
+import { NgbdSortableHeader } from './response-viewer/response-viewer.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { OreResponseViewerComponent } from './ore-response-viewer/ore-response-viewer/ore-response-viewer.component';
 
@@ -14,6 +15,8 @@ import { OreResponseViewerComponent } from './ore-response-viewer/ore-response-v
     AppComponent,
     ResponseViewerComponent,
     OreResponseViewerComponent,
+    ResponseViewerComponent, 
+    NgbdSortableHeader
   ],
   imports: [
     BrowserModule,
