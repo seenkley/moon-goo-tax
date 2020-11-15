@@ -15,11 +15,13 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 })
 
 
+
+// add sorting!!!!
 export class ResponseViewerComponent implements OnInit {
 
-  baseUrl = 'http://localhost:8090/'
+  baseUrl = 'http://localhost:8090/' // this needs to be changed to a proper ip!!!
 
-  characterEndpoint = this.baseUrl + 'info/characters'; // this needs to be changed to a proper ip!!!
+  characterEndpoint = this.baseUrl + 'info/characters'; 
   moonOreEndpoint = this.baseUrl + 'info/ore';
 
   characters$: Observable<CharacterViewer[]>;
