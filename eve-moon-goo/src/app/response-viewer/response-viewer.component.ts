@@ -137,12 +137,7 @@ export class ResponseViewerComponent {
 
   getMiningHistory(content, characterName: string) {
     this.openModalLg(content);
-    console.log(characterName);
     this.miningLog$ = this.fetchService.getMiningHistory(characterName).pipe(
       map(log => log.sort((a, b) => new Date(b.minedDate).getTime() - new Date(a.minedDate).getTime())));
-      this.miningLog$.subscribe(log => {
-        console.log(log);
-      })
-    console.log(this.miningLog$);
-  }
+    }
 }
