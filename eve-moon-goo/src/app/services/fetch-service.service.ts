@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { MoonOre } from '../interfaces/moon-ore';
 import { Observable } from 'rxjs';
 import { CharacterViewer } from '../interfaces/character-viewer';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { take } from 'rxjs/operators';
+import { MiningHistory } from '../interfaces/mining-history'
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,11 @@ export class FetchServiceService implements OnInit {
 
   characterEndpoint = this.baseUrl + 'info/characters';
   moonOreEndpoint = this.baseUrl + 'info/ore';
+
+
+  // info/getMiningHistory/?name=Arty%20Garsk
+  miningHistoryEndpoint = this.baseUrl + 'info/getMiningHistory'
+
 
   characters$: Observable<CharacterViewer[]>;
   characters: CharacterViewer[] = [];
@@ -40,5 +46,8 @@ export class FetchServiceService implements OnInit {
     return this.http.get<MoonOre[]>(this.moonOreEndpoint);
   }
 
-
+  getMiningHistory(name: string): Observable<MiningHistory[]>{
+    const params = new HttpParams().set('name', name);
+    return this.http.get<MiningHistory[]>(this.miningHistoryEndpoint, {params});
+  }
 }

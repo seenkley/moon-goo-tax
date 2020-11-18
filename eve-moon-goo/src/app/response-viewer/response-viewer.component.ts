@@ -8,6 +8,7 @@ import { map, startWith } from 'rxjs/operators';
 import { FetchServiceService } from '../services/fetch-service.service'
 
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { MiningHistory } from '../interfaces/mining-history';
 
 export type SortColumn = keyof CharacterViewer | '';
 export type SortDirection = 'asc' | 'desc' | '';
@@ -51,6 +52,7 @@ export class ResponseViewerComponent {
   characters: CharacterViewer[] = [];
   searchString?: string; // ? = optional
   moonOre$: Observable<MoonOre[]>;
+  miningLog$: Observable<MiningHistory[]>;
 
   constructor(private modalService: NgbModal, private fetchService: FetchServiceService) {
     this.fetchService.getCharacters();
@@ -131,5 +133,16 @@ export class ResponseViewerComponent {
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
+  }
+
+  getMiningHistory(content, characterName: string) {
+    this.openModalLg(content);
+    console.log(characterName);
+    this.miningLog$ = this.fetchService.getMiningHistory(characterName).pipe(
+      map(log => log.sort((a, b) => new Date(b.minedDate).getTime() - new Date(a.minedDate).getTime())));
+      this.miningLog$.subscribe(log => {
+        console.log(log);
+      })
+    console.log(this.miningLog$);
   }
 }

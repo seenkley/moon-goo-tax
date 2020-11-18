@@ -28,7 +28,7 @@
                             {{ ore.price | number}} ISK
                         </td>
                         <td>
-                            {{ ore.date }}
+                            {{ ore.date | date: 'dd-MM-yyyy HH:mm:ss'}}
                         </td>
                     </tr>
                 </ng-container>
@@ -71,6 +71,7 @@
                         <form>
                             <div class="form-group">
                                 <label for="minedOre">Total mined ore for <b>{{ character.name }}</b></label>
+                                <button class="btn btn-lg btn-outline-primary btn-sm" (click)="getMiningHistory(miningLog, character.name)" style="float: right;">Show full mining log</button>
                                 <table class="table table-striped">
 
                                     <thead>
@@ -97,6 +98,35 @@
                                 </table>
                             </div>
                         </form>
+                    </div>
+                </ng-template>
+
+                <ng-template #miningLog let-modal>
+                    <div class="modal-body">
+                        <table class="table table-striped" >
+                            <thead>
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Mined date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngFor="let log of miningLog$ | async">
+                                    <tr>
+                                        <td>
+                                            {{ log.oreName }}
+                                        </td>
+                                        <td>
+                                            {{ log.quantity | number}}
+                                        </td>
+                                        <td>
+                                            {{ log.minedDate | date: 'dd-MM-yyyy'}}
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                            </tbody>
+                        </table>
                     </div>
                 </ng-template>
 
