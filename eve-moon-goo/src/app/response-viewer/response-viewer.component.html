@@ -18,8 +18,6 @@
             <tr *ngIf="character.debt != 0 && (searchString === undefined || searchString.length === 0 
             || character.name.toLowerCase().includes(searchString.toLowerCase())
             || character.corpName.toLowerCase().includes(searchString.toLowerCase()))" (click)="openModal(content)">
-
-
                 <ng-template #content let-modal>
                     <div class="modal-header">
                         <h4 class="modal-title" id="modal-basic-title">Mined Ore</h4>
@@ -31,9 +29,9 @@
                         <form>
                             <div class="form-group">
                                 <label for="minedOre">Total mined ore for <b>{{ character.name }}</b></label>
-                                <button class="btn btn-lg btn-outline-primary btn-sm"
-                                    (click)="getMiningHistory(miningLog, character.name)" style="float: right;">Show
-                                    full mining log</button>
+                                
+                                <app-mining-service [name]="character.name"></app-mining-service>
+
                                 <table class="table table-striped">
 
                                     <thead>
@@ -62,39 +60,6 @@
                         </form>
                     </div>
                 </ng-template>
-
-                <ng-template #miningLog let-modal>
-                    <div class="modal-body">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Quantity</th>
-                                    <th scope="col">Mined date</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <ng-container *ngFor="let log of miningLog$ | async">
-                                    <tr>
-                                        <td>
-                                            {{ log.oreName }}
-                                        </td>
-                                        <td>
-                                            {{ log.quantity | number}}
-                                        </td>
-                                        <td>
-                                            {{ log.minedDate | date: 'dd-MM-yyyy'}}
-                                        </td>
-                                        <td>
-                                            {{ log.moon }}
-                                        </td>
-                                    </tr>
-                                </ng-container>
-                            </tbody>
-                        </table>
-                    </div>
-                </ng-template>
-
                 <td>
                     <ngb-highlight [result]="character.name" [term]="searchString"></ngb-highlight>
                 </td>

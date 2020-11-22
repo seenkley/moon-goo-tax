@@ -1,14 +1,7 @@
 import { Component, OnInit, Directive, EventEmitter, Input, Output, QueryList, ViewChildren } from '@angular/core';
-import { Observable } from 'rxjs';
-import { CharacterViewer } from '../interfaces/character-viewer';
-import { MoonOre } from '../interfaces/moon-ore';
-import { HttpClient } from '@angular/common/http';
-import { FormControl } from '@angular/forms';
-import { map, startWith } from 'rxjs/operators';
-import { FetchServiceService } from '../services/fetch-service.service'
 
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { MiningHistory } from '../interfaces/mining-history';
+import { CharacterViewer } from '../interfaces/character-viewer';
+import { FetchServiceService } from '../services/fetch-service.service'
 import { ModalServiceService } from '../services/modal-service.service';
 
 export type SortColumn = keyof CharacterViewer | '';
@@ -52,7 +45,7 @@ export class ResponseViewerComponent {
 
   characters: CharacterViewer[] = [];
   searchString?: string; // ? = optional
-  miningLog$: Observable<MiningHistory[]>;
+  
 
   constructor(private fetchService: FetchServiceService, private modalService: ModalServiceService) {
     this.fetchService.getCharacters();
@@ -86,16 +79,12 @@ export class ResponseViewerComponent {
   }
 
   init() {
-   
+
   }
 
   openModal(content) {
     this.modalService.openModal(content);
   }
 
-  getMiningHistory(content, characterName: string) {
-    this.modalService.openModalLg(content);
-    this.miningLog$ = this.fetchService.getMiningHistory(characterName).pipe(
-      map(log => log.sort((a, b) => new Date(b.minedDate).getTime() - new Date(a.minedDate).getTime())));
-    }
+
 }
