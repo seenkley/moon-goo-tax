@@ -1,0 +1,28 @@
+<button class="btn btn-lg btn-outline-primary btn-sm" (click)="getTransactionLog(transactionLog)"
+    style="float: right;">Show
+    transaction log</button>
+
+<ng-template #transactionLog let-modal>
+    <div class="modal-body">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Transaction date</th>
+                    <th scope="col">Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let log of character.transactionLogs">
+                    <tr>
+                        <td>
+                            {{ log.transactionDate | date }}
+                        </td>
+                        <td>
+                            {{ log.amount | number}} ISK
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </div>
+</ng-template>
