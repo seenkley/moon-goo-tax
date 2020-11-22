@@ -4,6 +4,13 @@ export interface MinedOre {
     delta: number
 }
 
+export interface TransactionLog {
+    id: string,
+    amount: number,
+    date: Date,
+    characterName: string
+}
+
 export interface CharacterViewer {
 
     id: number,

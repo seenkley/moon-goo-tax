@@ -83,7 +83,7 @@ export class ResponseViewerComponent {
   }
 
   openModal(content) {
-    this.modalService.openModal(content);
+    this.modalService.openModalLg(content);
   }
 
 

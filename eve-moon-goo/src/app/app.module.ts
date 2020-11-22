@@ -11,6 +11,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { OreResponseViewerComponent } from './ore-response-viewer/ore-response-viewer/ore-response-viewer.component';
 import { JitaPriceViewComponent } from './jita-price-view/jita-price-view.component';
 import { MiningServiceComponent } from './mining-service/mining-service.component';
+import { TransactionLogComponent } from './transaction-log/transaction-log.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,7 @@ import { MiningServiceComponent } from './mining-service/mining-service.componen
     ResponseViewerComponent,
     OreResponseViewerComponent,
     ResponseViewerComponent, 
-    NgbdSortableHeader, JitaPriceViewComponent, MiningServiceComponent
+    NgbdSortableHeader, JitaPriceViewComponent, MiningServiceComponent, TransactionLogComponent
   ],
   imports: [
     BrowserModule,
