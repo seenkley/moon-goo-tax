@@ -9,6 +9,7 @@ import { ResponseViewerComponent } from './response-viewer/response-viewer.compo
 import { NgbdSortableHeader } from './response-viewer/response-viewer.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { OreResponseViewerComponent } from './ore-response-viewer/ore-response-viewer/ore-response-viewer.component';
+import { JitaPriceViewComponent } from './jita-price-view/jita-price-view.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,7 @@ import { OreResponseViewerComponent } from './ore-response-viewer/ore-response-v
     ResponseViewerComponent,
     OreResponseViewerComponent,
     ResponseViewerComponent, 
-    NgbdSortableHeader
+    NgbdSortableHeader, JitaPriceViewComponent
   ],
   imports: [
     BrowserModule,

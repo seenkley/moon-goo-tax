@@ -9,6 +9,7 @@ import { FetchServiceService } from '../services/fetch-service.service'
 
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { MiningHistory } from '../interfaces/mining-history';
+import { ModalServiceService } from '../services/modal-service.service';
 
 export type SortColumn = keyof CharacterViewer | '';
 export type SortDirection = 'asc' | 'desc' | '';
@@ -51,10 +52,9 @@ export class ResponseViewerComponent {
 
   characters: CharacterViewer[] = [];
   searchString?: string; // ? = optional
-  moonOre$: Observable<MoonOre[]>;
   miningLog$: Observable<MiningHistory[]>;
 
-  constructor(private modalService: NgbModal, private fetchService: FetchServiceService) {
+  constructor(private fetchService: FetchServiceService, private modalService: ModalServiceService) {
     this.fetchService.getCharacters();
     this.characters = this.fetchService.getCharArray()
   }
@@ -86,57 +86,15 @@ export class ResponseViewerComponent {
   }
 
   init() {
-    this.moonOre$ = this.fetchService.getMoonOre().pipe(
-      map(events => events.sort((a: MoonOre, b: MoonOre) => {
-        if (a.name < b.name)
-          return -1;
-        if (a.name > b.name)
-          return 1;
-        return 0;
-      })
-      )
-    );
+   
   }
-
-  // modal stuff
-  closeResult = '';
 
   openModal(content) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
-
-  openModalLg(content) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: 'lg' }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
-
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
-  }
-
-  open(content) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
+    this.modalService.openModal(content);
   }
 
   getMiningHistory(content, characterName: string) {
-    this.openModalLg(content);
+    this.modalService.openModalLg(content);
     this.miningLog$ = this.fetchService.getMiningHistory(characterName).pipe(
       map(log => log.sort((a, b) => new Date(b.minedDate).getTime() - new Date(a.minedDate).getTime())));
     }

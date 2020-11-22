@@ -1,45 +1,6 @@
-<ng-template #jitaPrices let-modal>
-    <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Jita Prices</h4>
-        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    <div class="modal-body">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Last Update</th>
-                </tr>
-            </thead>
-            <tbody>
-                <ng-container *ngFor="let ore of moonOre$ | async">
-                    <tr>
-                        <td>
-                            {{ ore.id }}
-                        </td>
-                        <td>
-                            {{ ore.name }}
-                        </td>
-                        <td>
-                            {{ ore.price | number}} ISK
-                        </td>
-                        <td>
-                            {{ ore.date | date: 'dd-MM-yyyy HH:mm:ss'}}
-                        </td>
-                    </tr>
-                </ng-container>
-            </tbody>
-        </table>
-    </div>
-</ng-template>
+<app-jita-price-view></app-jita-price-view>
 
-<button class="btn btn-lg btn-outline-primary" (click)="openModalLg(jitaPrices)" style="float: right;">Show Jita
-    Prices</button>
- <form>
+<form>
     <div class="form-group form-inline">
         Character search: <input class="form-control ml-2" type="text" [(ngModel)]="searchString" name="searchString" />
     </div>
@@ -54,10 +15,9 @@
     </thead>
     <tbody>
         <ng-container *ngFor="let character of characters">
-            <tr   *ngIf="character.debt != 0 && (searchString === undefined || searchString.length === 0 
+            <tr *ngIf="character.debt != 0 && (searchString === undefined || searchString.length === 0 
             || character.name.toLowerCase().includes(searchString.toLowerCase())
-            || character.corpName.toLowerCase().includes(searchString.toLowerCase()))"
-            (click)="openModal(content)">
+            || character.corpName.toLowerCase().includes(searchString.toLowerCase()))" (click)="openModal(content)">
 
 
                 <ng-template #content let-modal>
@@ -71,7 +31,9 @@
                         <form>
                             <div class="form-group">
                                 <label for="minedOre">Total mined ore for <b>{{ character.name }}</b></label>
-                                <button class="btn btn-lg btn-outline-primary btn-sm" (click)="getMiningHistory(miningLog, character.name)" style="float: right;">Show full mining log</button>
+                                <button class="btn btn-lg btn-outline-primary btn-sm"
+                                    (click)="getMiningHistory(miningLog, character.name)" style="float: right;">Show
+                                    full mining log</button>
                                 <table class="table table-striped">
 
                                     <thead>
@@ -103,7 +65,7 @@
 
                 <ng-template #miningLog let-modal>
                     <div class="modal-body">
-                        <table class="table table-striped" >
+                        <table class="table table-striped">
                             <thead>
                                 <tr>
                                     <th scope="col">Name</th>
@@ -122,6 +84,9 @@
                                         </td>
                                         <td>
                                             {{ log.minedDate | date: 'dd-MM-yyyy'}}
+                                        </td>
+                                        <td>
+                                            {{ log.moon }}
                                         </td>
                                     </tr>
                                 </ng-container>
@@ -143,4 +108,5 @@
         </ng-container>
     </tbody>
 </table>
-<span class="pull-right copyright">&copy; Built by Ign: <strong>kLey I</strong>. Find the repo here: <a href="https://github.com/seenkley/moon-goo-tax-backend">Github Link</a></span>
+<span class="pull-right copyright">&copy; Built by Ign: <strong>kLey I</strong>. Find the repo here: <a
+        href="https://github.com/seenkley/moon-goo-tax-backend">Github Link</a></span>
