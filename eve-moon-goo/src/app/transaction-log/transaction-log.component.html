@@ -15,7 +15,7 @@
                 <ng-container *ngFor="let log of character.transactionLogs">
                     <tr>
                         <td>
-                            {{ log.transactionDate | date }}
+                            {{ log.transactionDate | date: 'dd-MM-yyyy HH:mm' }}
                         </td>
                         <td>
                             {{ log.amount | number}} ISK
