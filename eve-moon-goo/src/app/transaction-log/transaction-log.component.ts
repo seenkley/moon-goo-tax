@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
-import { CharacterViewer } from '../interfaces/character-viewer';
+import { CharacterViewer, TransactionLog } from '../interfaces/character-viewer';
 import { FetchServiceService } from '../services/fetch-service.service';
 import { ModalServiceService } from '../services/modal-service.service';
 
@@ -21,6 +21,11 @@ export class TransactionLogComponent implements OnInit {
 
   getTransactionLog(content) {
     this.modalService.openModalLg(content);
+    this.transactions = this.character.transactionLogs as TransactionLog[];
+    this.transactions = this.transactions.
+    sort((a: TransactionLog, b: TransactionLog) => {
+      return new Date(b.date).getTime() - new Date(a.date).getTime();
+    });
   }
 
 }

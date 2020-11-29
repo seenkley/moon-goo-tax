@@ -1,6 +1,6 @@
 import { Component, OnInit, Directive, EventEmitter, Input, Output, QueryList, ViewChildren } from '@angular/core';
 
-import { CharacterViewer } from '../interfaces/character-viewer';
+import { CharacterViewer, TransactionLog } from '../interfaces/character-viewer';
 import { FetchServiceService } from '../services/fetch-service.service'
 import { ModalServiceService } from '../services/modal-service.service';
 

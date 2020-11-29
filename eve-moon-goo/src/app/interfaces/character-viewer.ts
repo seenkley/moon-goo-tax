@@ -12,12 +12,10 @@ export interface TransactionLog {
 }
 
 export interface CharacterViewer {
-
     id: number,
     name: string, 
     corpName: string,
     debt: number,
-    // minedOre: {
-    //    ore: MinedOre;
-    // };
+    transactionLogs: any;
+ 
 }

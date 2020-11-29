@@ -12,7 +12,7 @@
                 </tr>
             </thead>
             <tbody>
-                <ng-container *ngFor="let log of character.transactionLogs">
+                <ng-container *ngFor="let log of transactions">
                     <tr>
                         <td>
                             {{ log.transactionDate | date: 'dd-MM-yyyy HH:mm' }}
