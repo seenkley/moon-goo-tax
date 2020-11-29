@@ -9,23 +9,24 @@ import { ModalServiceService } from '../services/modal-service.service';
   templateUrl: './transaction-log.component.html',
   styleUrls: ['./transaction-log.component.css']
 })
+
 export class TransactionLogComponent implements OnInit {
 
   @Input() character: CharacterViewer;
-  transactions = [];
+  transactions: TransactionLog[] = [];
 
   constructor(private modalService: ModalServiceService, private fetchService: FetchServiceService) { }
 
   ngOnInit(): void {
+    this.transactions = this.character.transactionLogs as TransactionLog[];
   }
 
   getTransactionLog(content) {
     this.modalService.openModalLg(content);
-    this.transactions = this.character.transactionLogs as TransactionLog[];
     this.transactions = this.transactions.
-    sort((a: TransactionLog, b: TransactionLog) => {
-      return new Date(b.date).getTime() - new Date(a.date).getTime();
-    });
+      sort((a: TransactionLog, b: TransactionLog) => {
+        return new Date(b.transactionDate).getTime() - new Date(a.transactionDate).getTime();
+      });
   }
 
 }
