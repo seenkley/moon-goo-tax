@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ModalServiceService } from './services/modal-service.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Valkyrie Moon Tax System';
+
+  constructor(private modalService: ModalServiceService) {
+    
+  }
+
+  openModal(content) {
+    this.modalService.openModalLg(content);
+  }
+
 }

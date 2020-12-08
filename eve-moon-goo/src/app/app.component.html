@@ -1,17 +1,103 @@
 <h1>{{title}}</h1>
-Some information first. <br>
-
-<ul>
-    <li>Ore data will be fetched every day at 01:30 UTC</li>
-    <li>Transactions are fetched every hour</li>
-    <li>Market data is fetched ever 4 hours</li>
-</ul>
-<div>Transfer the listed amount to <b>Chibi Finance Department</b>. You don't need to add any reason. Just be sure you transfer the money with the listed character. <br>
-    You also can transfer the money for all you alts from one character. When using this method, make sure you type the <strong>correct character name</strong> in the <strong>Reason field</strong>.
-    This method is <strong>case sensitive!</strong>
-    
+<button class="btn btn-lg btn-outline-primary btn-sm" (click)="openModal(ruskiVersion)" style="float: right;">Справка</button>
+<button class="btn btn-lg btn-outline-primary btn-sm" (click)="openModal(germanVersion)" style="float: right;">Deutsche
+    Version</button>
+<!-- <button class="btn btn-lg btn-outline-primary btn-sm" (click)="openModal(frenchVersion)" style="float: right;">French
+    version</button> -->
+<div>
+    Some information first. <br>
+    <ul>
+        <li>Names in the list are klickable for detailed information</li>
+        <li>Ore data will be fetched every day at 01:30 UTC</li>
+        <li>Transactions are fetched every two hours</li>
+        <li>Market data is fetched ever 4 hours</li>
+    </ul>
+    <div>Transfer the listed amount to <b>Chibi Finance Department</b>. You don't need to add any reason. Just be sure
+        you
+        transfer the money with the listed character. <br>
+        You also can transfer the money for all you alts from one character. When using this method, make sure you type
+        the
+        <strong>correct character name</strong> in the <strong>Reason field</strong>.
+        This method is <strong>case sensitive!</strong>
+    </div>
     <hr>
-    
-<br>
-<br>
+</div>
+
+
+<ng-template #ruskiVersion let-modal>
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">русское объяснение</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        Немного информации для начала.<br>
+
+        <ul>
+            <li>На имена в списке можно нажать для детальной информации</li>
+            <li>Данные по добыче собираются  в 01:30 EVT ( -3 часа от МСК)</li>
+            <li>Статус денежных переводов обновляется каждые два часа</li>
+            <li>Рыночные цены обновляются раз в 4 часа</li>
+        </ul>
+        <div>ISK перечисляются на счет корпорации <strong>Chibi Finance Department</strong>. Вам не нужно добавлять комментарий. Перевод денег должен быть именно с того персонажа за которого платится налог.<br><br>
+            Вы можете заплатить за всех альтов с одного персонажа. При этом способе в комментарий к денежному переводу добавляем ПРАВИЛЬНЫЙ ник персонажа. Комментарий чувствителен к регистру. На каждого персонажа должен быть отдельный перевод. Комментарий должен содержать ТОЛЬКО НИК  - не надо добавлять другие слова или символы
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #germanVersion let-modal>
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">русское объяснение</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        Paar infos.<br>
+
+        <ul>
+            <li>Für detailierte Informationen, die Namen in der Liste anklicken</li>
+            <li>Jeden Tag um 01:30 ET werden die Mining Daten gezogen</li>
+            <li>Überweisungen werden jede zweite Stunde aktualisiert</li>
+            <li>Markt Daten werden jede vierte Stunde aktualisiert</li>
+        </ul>
+        <div>Den unten angezeigten ISK Betrag an <b>Chibi Finance Department</b> überweisen. Es muss nichts beim
+            "Betreff"
+            oder "Reason" eingetragen werden - einfach überweisen. Achte darauf, dass du das geld mit dem unten
+            angeführten Character überweist! <br>
+            Es besteht auch die Möglichkeit für alle alt-Character das geld zu Überweisen. Hierfür müsst ihr im feld
+            "Betreff" oder "Reason" den EXAKTEN
+            Name eintragen - inklusive Groß- und Kleinschreibung!
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #frenchVersion let-modal>
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">русское объяснение</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        Немного информации.<br>
+
+        <ul>
+            <li>Данные по добыче собираются в 01:30 EVT ( -3 часа от МСК)</li>
+            <li>Статус денежных переводов обновляется каждый час</li>
+            <li>Рыночные цены обновляются раз в 4 часа</li>
+        </ul>
+        <div>ISK перечисляются на счет корпорации Chibi Finance Department. Вам нет нужно добавлять комментарий .
+            Требуется чтобы перевод был именно с того персонажа за которого платится налог .
+            Вы можете заплатить за всех альтов с одного персонажа . При этом способе в комментарий перевода добавляем
+            ПРАВИЛЬНЫЙ ник персонажа . Комментарий чувствителен к регистру . На каждого персонажа должен быть отдельный
+            перевод . Комментарий должен содержать ТОЛЬКО НИК - не надо добавлять другие слова или символы .
+        </div>
+    </div>
+</ng-template>
+
 <app-response-viewer></app-response-viewer>

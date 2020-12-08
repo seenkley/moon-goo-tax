@@ -28,13 +28,14 @@
                     <div class="modal-body">
                         <form>
                             <div class="form-group">
-                                
+
                                 <label for="minedOre">Total mined ore for <b>{{ character.name }}.</b></label><br>
                                 <ul>
                                     <li>The <strong>Amount</strong> is the total amount you mined - like ever!</li>
-                                    <li>The <strong>Delta</strong> displays the change to your mined amount from last time.<br></li>
+                                    <li>The <strong>Delta</strong> displays the change to your mined amount from
+                                        last time.<br></li>
                                 </ul>
-                                
+
                                 <app-mining-service [name]="character.name"></app-mining-service>
                                 <app-transaction-log [character]="character"></app-transaction-log>
                                 <table class="table table-striped">
