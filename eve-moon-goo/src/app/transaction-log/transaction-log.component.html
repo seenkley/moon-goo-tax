@@ -3,7 +3,14 @@
     transaction log</button>
 
 <ng-template #transactionLog let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Transaction log</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
     <div class="modal-body">
+        The <strong>Transaction log</strong> shows all your tax payment in chronological order.
         <table class="table table-striped">
             <thead>
                 <tr>
