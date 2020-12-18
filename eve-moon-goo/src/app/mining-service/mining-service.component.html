@@ -19,6 +19,7 @@
                     <th scope="col">Quantity</th>
                     <th scope="col">Mined date</th>
                     <th scope="col">Moon Name</th>
+                    <th scope="col">Value (tax)</th>
                 </tr>
             </thead>
             <tbody>
@@ -35,6 +36,9 @@
                         </td>
                         <td>
                             {{ log.minedStationName }}
+                        </td>
+                        <td>
+                            {{ log.value | number}} ISK
                         </td>
                     </tr>
                 </ng-container>
