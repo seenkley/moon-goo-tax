@@ -18,8 +18,11 @@ import { TransactionLogComponent } from './transaction-log/transaction-log.compo
     AppComponent,
     ResponseViewerComponent,
     OreResponseViewerComponent,
-    ResponseViewerComponent, 
-    NgbdSortableHeader, JitaPriceViewComponent, MiningServiceComponent, TransactionLogComponent
+    ResponseViewerComponent,
+    NgbdSortableHeader, 
+    JitaPriceViewComponent, 
+    MiningServiceComponent, 
+    TransactionLogComponent
   ],
   imports: [
     BrowserModule,

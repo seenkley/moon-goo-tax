@@ -12,7 +12,7 @@ import { MiningHistory } from '../interfaces/mining-history'
 })
 export class FetchServiceService implements OnInit {
 
-  baseUrl = 'http://localhost:8090/' // this needs to be changed to a proper ip!!!
+  baseUrl = 'http://tax.vlkr.space:8090/' // this needs to be changed to a proper ip!!!
 
   characterEndpoint = this.baseUrl + 'info/characters';
   moonOreEndpoint = this.baseUrl + 'info/ore';

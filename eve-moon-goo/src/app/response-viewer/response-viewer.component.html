@@ -17,7 +17,7 @@
         <ng-container *ngFor="let character of characters">
             <tr *ngIf="character.debt != 0 && (searchString === undefined || searchString.length === 0 
             || character.name.toLowerCase().includes(searchString.toLowerCase())
-            || character.corpName.toLowerCase().includes(searchString.toLowerCase()))" (click)="openModal(content)">
+            || character.corpName.toLowerCase().includes(searchString.toLowerCase()))" >
                 <ng-template #content let-modal>
                     <div class="modal-header">
                         <h4 class="modal-title" id="modal-basic-title">Mined Ore</h4>
@@ -67,17 +67,20 @@
                     </div>
                 </ng-template>
                 <td>
-                    <ngb-highlight [result]="character.name" [term]="searchString"></ngb-highlight>
+                    <ngb-highlight [result]="character.name" [term]="searchString"
+                    ngbTooltip="Copied to clipboard!" triggers="click:blur" (click)="copyToClipoard(character.name)"></ngb-highlight>
                 </td>
-                <td>
+                <td (click)="openModal(content)">
                     <ngb-highlight [result]="character.corpName" [term]="searchString"></ngb-highlight>
                 </td>
-                <td>
-                    <ngb-highlight [result]="character.debt | number" [term]="searchString"></ngb-highlight> ISK
+                <td  >
+                    <ngb-highlight [result]="character.debt | number" [term]="searchString" 
+                    ngbTooltip="Copied to clipboard!" triggers="click:blur" (click)="copyToClipoard(character.debt)"></ngb-highlight> ISK      
                 </td>
             </tr>
         </ng-container>
     </tbody>
 </table>
 <span class="pull-right copyright">&copy; Built by Ign: <strong>kLey I</strong>. Find the repo here: <a
-        href="https://github.com/seenkley/moon-goo-tax-backend">Github Link</a></span>
+        href="https://github.com/seenkley/moon-goo-tax-backend">Github Link</a></span>   v1.1.0
+
