@@ -73,7 +73,7 @@
                 <td (click)="openModal(content)">
                     <ngb-highlight [result]="character.corpName" [term]="searchString"></ngb-highlight>
                 </td>
-                <td  >
+                <td style="background-color:{{character.background}};">
                     <ngb-highlight [result]="character.debt | number" [term]="searchString" 
                     ngbTooltip="Copied to clipboard!" triggers="click:blur" (click)="copyToClipoard(character.debt)"></ngb-highlight> ISK      
                 </td>

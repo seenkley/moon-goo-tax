@@ -3,8 +3,7 @@ import { MoonOre } from '../interfaces/moon-ore';
 import { Observable } from 'rxjs';
 import { CharacterViewer } from '../interfaces/character-viewer';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { take } from 'rxjs/operators';
+import { OnInit } from '@angular/core';
 import { MiningHistory } from '../interfaces/mining-history'
 
 @Injectable({
@@ -29,13 +28,44 @@ export class FetchServiceService implements OnInit {
 
   constructor(private http: HttpClient) { }
 
-  ngOnInit(): void {  }
+  ngOnInit(): void { }
 
   async getCharacters() {
     await this.http.get<CharacterViewer[]>(this.characterEndpoint).toPromise().then((character: CharacterViewer[]) => {
       character.forEach(entry => this.characters.push(entry));
     });
-    this.characters.sort((a,b) => a.name.localeCompare(b.name)); // sort by name
+    this.characters.sort((a, b) => a.name.localeCompare(b.name)); // sort by name
+
+    // now set background
+    this.setBackgroundColor();
+  }
+  setBackgroundColor() {
+    var todayMinus14 = new Date();
+    todayMinus14.setDate(todayMinus14.getDate() - 14);
+
+    var todayMinus7 = new Date();
+    todayMinus7.setDate(todayMinus7.getDate() - 7);
+    this.characters.forEach(character => {
+      var lastTransactionDate;
+      if (character.transactionLogs.length > 0) {
+        lastTransactionDate = new Date(character.transactionLogs[character.transactionLogs.length - 1].transactionDate)
+      } else {
+        character.background = "lightblue";
+        return;
+      }
+
+      if (lastTransactionDate < todayMinus14) {
+        character.background = "red";
+        return;
+      }
+      if (lastTransactionDate < todayMinus7) {
+        character.background = "yellow";
+        return;
+      } else {
+        // everything cool!
+        character.background = "";
+      }
+    });
   }
 
   getCharArray() {
@@ -46,8 +76,8 @@ export class FetchServiceService implements OnInit {
     return this.http.get<MoonOre[]>(this.moonOreEndpoint);
   }
 
-  getMiningHistory(name: string): Observable<MiningHistory[]>{
+  getMiningHistory(name: string): Observable<MiningHistory[]> {
     const params = new HttpParams().set('name', name);
-    return this.http.get<MiningHistory[]>(this.miningHistoryEndpoint, {params});
+    return this.http.get<MiningHistory[]>(this.miningHistoryEndpoint, { params });
   }
 }

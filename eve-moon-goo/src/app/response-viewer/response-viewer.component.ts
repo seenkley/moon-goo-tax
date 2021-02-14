@@ -1,6 +1,6 @@
 import { Component, OnInit, Directive, EventEmitter, Input, Output, QueryList, ViewChildren } from '@angular/core';
 
-import { CharacterViewer, TransactionLog } from '../interfaces/character-viewer';
+import { CharacterViewer } from '../interfaces/character-viewer';
 import { FetchServiceService } from '../services/fetch-service.service'
 import { ModalServiceService } from '../services/modal-service.service';
 
@@ -45,7 +45,7 @@ export class ResponseViewerComponent {
 
   characters: CharacterViewer[] = [];
   searchString?: string; // ? = optional
-  
+
 
   constructor(private fetchService: FetchServiceService, private modalService: ModalServiceService) {
     this.fetchService.getCharacters();
@@ -53,7 +53,6 @@ export class ResponseViewerComponent {
   }
 
   ngOnInit() {
-    this.init();
   }
 
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
@@ -76,10 +75,6 @@ export class ResponseViewerComponent {
         return direction === 'asc' ? res : -res;
       });
     }
-  }
-
-  init() {
-
   }
 
   openModal(content) {

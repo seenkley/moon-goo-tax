@@ -7,7 +7,8 @@ export interface MinedOre {
 export interface TransactionLog {
     id: string,
     amount: number,
-    transactionDate: string | number | Date,
+    // transactionDate: string | number | Date,
+    transactionDate: Date,
     characterName: string
 }
 
@@ -16,6 +17,7 @@ export interface CharacterViewer {
     name: string, 
     corpName: string,
     debt: number,
-    transactionLogs: any;
- 
+    transactionLogs: any,
+    background: string;
+    
 }
