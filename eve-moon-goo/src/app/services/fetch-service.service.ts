@@ -39,6 +39,7 @@ export class FetchServiceService implements OnInit {
     // now set background
     this.setBackgroundColor();
   }
+
   setBackgroundColor() {
     var todayMinus14 = new Date();
     todayMinus14.setDate(todayMinus14.getDate() - 14);
@@ -46,6 +47,9 @@ export class FetchServiceService implements OnInit {
     var todayMinus7 = new Date();
     todayMinus7.setDate(todayMinus7.getDate() - 7);
     this.characters.forEach(character => {
+      if (character.debt < 0) {
+        return;
+      }
       var lastTransactionDate;
       if (character.transactionLogs.length > 0) {
         lastTransactionDate = new Date(character.transactionLogs[character.transactionLogs.length - 1].transactionDate)
