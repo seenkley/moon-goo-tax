@@ -46,7 +46,6 @@ export class ResponseViewerComponent {
   characters: CharacterViewer[] = [];
   searchString?: string; // ? = optional
 
-
   constructor(private fetchService: FetchServiceService, private modalService: ModalServiceService) {
     this.fetchService.getCharacters();
     this.characters = this.fetchService.getCharArray()

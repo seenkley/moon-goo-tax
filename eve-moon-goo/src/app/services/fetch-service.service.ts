@@ -11,10 +11,13 @@ import { MiningHistory } from '../interfaces/mining-history'
 })
 export class FetchServiceService implements OnInit {
 
-  baseUrl = 'http://tax.vlkr.space:8090/' // this needs to be changed to a proper ip!!!
+  // baseUrl = 'http://tax.vlkr.space:8090/' // this needs to be changed to a proper ip!!!
+  baseUrl = '/' // this needs to be changed to a proper ip!!!
+  // baseUrl = 'http://localhost:8080/' // this needs to be changed to a proper ip!!!
 
   characterEndpoint = this.baseUrl + 'info/characters';
   moonOreEndpoint = this.baseUrl + 'info/ore';
+  holdingCorpEndpoint = this.baseUrl + 'info/holdingCorp';
 
 
   // info/getMiningHistory/?name=Arty%20Garsk
@@ -83,5 +86,9 @@ export class FetchServiceService implements OnInit {
   getMiningHistory(name: string): Observable<MiningHistory[]> {
     const params = new HttpParams().set('name', name);
     return this.http.get<MiningHistory[]>(this.miningHistoryEndpoint, { params });
+  }
+
+  getHoldingCorp(): Observable<string> {
+    return this.http.get(this.holdingCorpEndpoint, {responseType: 'text'});
   }
 }
